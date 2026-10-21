@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daftar Tugas Kuliah</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; color: #1f2937; }
+    h1 { margin-bottom: .25rem; }
+    .sub { color: #6b7280; margin-bottom: 1.5rem; }
+    form.tambah { display: grid; grid-template-columns: 1fr 2fr 1fr auto; gap: .5rem; margin-bottom: 1.5rem; }
+    input, button { padding: .5rem .6rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: .95rem; }
+    button { cursor: pointer; background: #2563eb; color: #fff; border-color: #2563eb; }
+    button.sekunder { background: #fff; color: #374151; border-color: #d1d5db; }
+    button.bahaya { background: #fff; color: #b91c1c; border-color: #fca5a5; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid #e5e7eb; }
+    tr.done td.judul { text-decoration: line-through; color: #9ca3af; }
+    .aksi { display: flex; gap: .4rem; }
+    .aksi form { margin: 0; }
+    .kosong { color: #6b7280; padding: 1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Daftar Tugas Kuliah</h1>
+  <div class="sub">{{ selesai }} dari {{ total }} tugas selesai</div>
+
+  <form class="tambah" method="post" action="{{ url_for('tambah') }}">
+    <input name="mata_kuliah" placeholder="Mata kuliah" required>
+    <input name="judul" placeholder="Judul tugas" required>
+    <input type="date" name="deadline">
+    <button type="submit">Tambah</button>
+  </form>
+
+  {% if rows %}
+  <table>
+    <thead>
+      <tr><th>Mata kuliah</th><th>Tugas</th><th>Deadline</th><th>Aksi</th></tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr class="{{ 'done' if r.selesai else '' }}">
+        <td>{{ r.mata_kuliah }}</td>
+        <td class="judul">{{ r.judul }}</td>
+        <td>{{ r.deadline.strftime('%d %b %Y') if r.deadline else '-' }}</td>
+        <td class="aksi">
+          <form method="post" action="{{ url_for('toggle_selesai', tugas_id=r.id) }}">
+            <button class="sekunder" type="submit">{{ 'Batal' if r.selesai else 'Selesai' }}</button>
+          </form>
+          <form method="post" action="{{ url_for('hapus', tugas_id=r.id) }}">
+            <button class="bahaya" type="submit">Hapus</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="kosong">Belum ada tugas. Tambahkan di atas.</div>
+  {% endif %}
+</body>
+</html>
