@@ -9,10 +9,11 @@
     h1 { margin-bottom: .25rem; }
     .sub { color: #6b7280; margin-bottom: 1.5rem; }
     form.tambah { display: grid; grid-template-columns: 1fr 2fr 1fr auto; gap: .5rem; margin-bottom: 1.5rem; }
-    input, button { padding: .5rem .6rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: .95rem; }
+    input, button, a.tombol { padding: .5rem .6rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: .95rem; }
     button { cursor: pointer; background: #2563eb; color: #fff; border-color: #2563eb; }
     button.sekunder { background: #fff; color: #374151; border-color: #d1d5db; }
     button.bahaya { background: #fff; color: #b91c1c; border-color: #fca5a5; }
+    a.tombol { display: inline-block; background: #fff; color: #2563eb; border-color: #93c5fd; text-decoration: none; line-height: normal; }
     table { width: 100%; border-collapse: collapse; }
     th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid #e5e7eb; }
     tr.done td.judul { text-decoration: line-through; color: #9ca3af; }
@@ -47,6 +48,7 @@
           <form method="post" action="{{ url_for('toggle_selesai', tugas_id=r.id) }}">
             <button class="sekunder" type="submit">{{ 'Batal' if r.selesai else 'Selesai' }}</button>
           </form>
+          <a class="tombol" href="{{ url_for('edit', tugas_id=r.id) }}">Edit</a>
           <form method="post" action="{{ url_for('hapus', tugas_id=r.id) }}">
             <button class="bahaya" type="submit">Hapus</button>
           </form>

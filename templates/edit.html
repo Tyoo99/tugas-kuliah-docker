@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Tugas</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 520px; margin: 2rem auto; padding: 0 1rem; }
+    label { display: block; margin: 12px 0 4px; font-weight: 600; }
+    input { width: 100%; padding: 8px; box-sizing: border-box; }
+    .aksi { margin-top: 16px; display: flex; gap: 12px; align-items: center; }
+    button { padding: 8px 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>Edit Tugas</h2>
+  <form method="post">
+    <label for="mata_kuliah">Mata kuliah</label>
+    <input id="mata_kuliah" name="mata_kuliah" value="{{ r.mata_kuliah }}" required>
+
+    <label for="judul">Judul tugas</label>
+    <input id="judul" name="judul" value="{{ r.judul }}" required>
+
+    <label for="deadline">Deadline</label>
+    <input id="deadline" type="date" name="deadline" value="{{ r.deadline or '' }}">
+
+    <div class="aksi">
+      <button type="submit">Simpan</button>
+      <a href="{{ url_for('index') }}">Batal</a>
+    </div>
+  </form>
+</body>
+</html>
